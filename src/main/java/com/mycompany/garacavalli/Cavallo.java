@@ -4,29 +4,40 @@
  */
 package com.mycompany.garacavalli;
 
+import java.util.Random;
 /**
  *
  * @author osamu
  */
+// Costruttore del cavallo
 public class Cavallo extends Thread {
-    private String nome;
-    private int Dpercorsa;
-    private int Dtotale;
+    private final String nome; // Nome del cavallo
+    private int Dpercorsa; // Distanza totale gara
+    private final int Dtotale = 0; // Metri percorsi nel momento
+    private static final Random random = new Random(); // l'isanza di Random
     
-    public Cavallo(String nome, int Dpercorsa, int Dtotale){
+    public Cavallo(String nome, int Dpercorsa){
         this.nome = nome;
-        this.Dpercorsa = 0;
-        this.Dtotale = Dtotale;
+        this.Dpercorsa = Dpercorsa;
     }
     
-    public void Run(){
-         int avanzamento = (int) (Math.random()* 10+1);
-        while(Dpercorsa < Dtotale){
-            Dpercorsa += avanzamento;
-            System.out.println(nome + " percorso " + Dpercorsa + " metri");
+    public void Run(){ // metodo run quando il thread parte 
+        while(Dpercorsa < Dtotale){ // il cavallo corre finche non ha coperto la distanza totale
+            int step;
+            // uso random.nextInt(10) per generare un numero casuale fra 0 e 9 + 1
+            step = random.nextInt(10) + 1; //corre tra 1 e 10 metri
+            Dpercorsa += step;
             
+            if (Dpercorsa > Dtotale) {
+                Dpercorsa = Dtotale;
+            } // cerco di non superare la distanza totale 
+            
+            System.out.println(nome + "il cavallo ha percorso" + Dpercorsa + "metri");
+            
+           
             
         }
+        
         
         System.out.println(nome + "ha terminato la gara");
     }
